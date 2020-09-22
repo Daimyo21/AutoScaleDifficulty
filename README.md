@@ -1,5 +1,7 @@
-<h1><a href="https://www.nexusmods.com/outward/mods/161">AutoScaleDifficulty</a></h1>
-<strong>Outward mod allowing the customization of character's stats.</strong><br>
+<h1><a href="pendingurl">AutoScaleDifficulty</a></h1>
+<strong>Outward mod with ability to auto scale difficulty based on numerous factors.</strong><br>
+
+Full credit to original mod creator: https://www.nexusmods.com/outward/mods/161
 
 <strong>Requires:</strong>
   - <a href="https://github.com/BepInEx/BepInEx">BepInEx</a>
