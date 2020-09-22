@@ -1,29 +1,29 @@
 ﻿using System.Collections.Generic;
 using SharedModConfig;
 
-namespace CustomGameStats
+namespace AutoScaleDifficulty
 {
     public class Settings
     {
         //mod naming
-        public static string ModName { get; private set; } = "CustomGameStats";
+        public static string ModName { get; private set; } = "AutoScaleDifficulty";
         public static string PlayerStatsTitle { get; private set; } = " - Player Stats";
         public static string AIStatsTitle { get; private set; }  = " - AI Stats";
 
         //rules names
-        public static string ToggleSwitch { get; private set; } = "ToggleSwitch";
+        public static string EnableAutoScaleDifficulty { get; private set; } = "EnableAutoScaleDifficulty";
         public static string GameBehaviour { get; private set; } = "GameBehaviour";
         public static string StrictMinimum { get; private set; } = "StrictMinimum";
 
         //rules section
-        public static string ToggleSection { get; private set; } = "Toggle Custom Stats";
+        public static string AutoScaleDiff_Title { get; private set; } = "Enable Auto Scale Difficulty";
         public static string BehaviourSection { get; private set; } = "Enforce Game Behaviour";
         public static string StrictSection { get; private set; }  = "Enforce Strict Minimums";
 
         //descriptors
         public static string MultDesc { get; private set; } = "Is a percent modifier?";
         public static string ModDesc { get; private set; } = "Modifier value: ";
-        public static string ToggleDesc { get; private set; }  = "Enable/disable";
+        public static string AutoScaleDiff_Desc { get; private set; }  = "Enable Auto Scale Difficulty (Overrides vanilla difficulty)";
         public static string BehaviourDesc { get; private set; } = "Prevents unexpected behaviour to occur. Use with caution!";
         public static string StrictDesc { get; private set; } = "Prevents values from being reduced below zero. Do not touch unless you know what you are doing! (Ignored if Enforce Game Behaviour enabled)";
 
@@ -173,9 +173,9 @@ namespace CustomGameStats
         {
             new BoolSetting
             {
-                Name = ToggleSwitch,
-                SectionTitle = ToggleSection,
-                Description = ToggleDesc,
+                Name = EnableAutoScaleDifficulty,
+                SectionTitle = AutoScaleDiff_Title,
+                Description = AutoScaleDiff_Desc,
                 DefaultValue = true
             },
             new BoolSetting

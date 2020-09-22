@@ -1,4 +1,4 @@
-<h1><a href="https://www.nexusmods.com/outward/mods/161">CustomGameStats</a></h1>
+<h1><a href="https://www.nexusmods.com/outward/mods/161">AutoScaleDifficulty</a></h1>
 <strong>Outward mod allowing the customization of character's stats.</strong><br>
 
 <strong>Requires:</strong>

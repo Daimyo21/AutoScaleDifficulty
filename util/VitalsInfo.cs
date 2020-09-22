@@ -1,4 +1,4 @@
-﻿namespace CustomGameStats
+﻿namespace AutoScaleDifficulty
 {
     public class VitalsInfo
     {

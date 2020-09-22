@@ -2,7 +2,7 @@
 using System.Reflection;
 
 
-namespace CustomGameStats
+namespace AutoScaleDifficulty
 {
     public static class AT
     {

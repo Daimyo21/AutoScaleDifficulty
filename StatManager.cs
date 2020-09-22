@@ -6,7 +6,7 @@ using Photon;
 using SharedModConfig;
 using UnityEngine;
 
-namespace CustomGameStats
+namespace AutoScaleDifficulty
 {
     public class StatManager : PunBehaviour
     {
@@ -36,8 +36,8 @@ namespace CustomGameStats
 
         internal void Start()
         {
-            CustomGameStats.PlayerConfig.OnSettingsSaved += PlayerSyncHandler;
-            CustomGameStats.AIConfig.OnSettingsSaved += AISyncHandler;
+            AutoScaleDifficulty.AutoScaleDiff_Config.OnSettingsSaved += PlayerSyncHandler;
+            AutoScaleDifficulty.AIConfig.OnSettingsSaved += AISyncHandler;
         }
 
         internal void Update()
@@ -54,7 +54,7 @@ namespace CustomGameStats
                 if (_checkSplit)
                 {
                     _checkSplit = false;
-                    UpdateCustomStats(CustomGameStats.PlayerConfig);
+                    UpdateCustomStats(AutoScaleDifficulty.AutoScaleDiff_Config);
                 }
 
                 if (!PhotonNetwork.offlineMode && PhotonNetwork.isNonMasterClientInRoom)
@@ -78,8 +78,8 @@ namespace CustomGameStats
                     _currentHostUid = "";
                     UpdatePlayerSyncInfo(false);
                     UpdateAISyncInfo(false);
-                    UpdateCustomStats(CustomGameStats.PlayerConfig);
-                    UpdateCustomStats(CustomGameStats.AIConfig);
+                    UpdateCustomStats(AutoScaleDifficulty.AutoScaleDiff_Config);
+                    UpdateCustomStats(AutoScaleDifficulty.AIConfig);
                 }
 
                 _checkSplit = true;
@@ -144,7 +144,7 @@ namespace CustomGameStats
 
             if (PhotonNetwork.isMasterClient)
             {
-                Instance.UpdateCustomStats(CustomGameStats.PlayerConfig);
+                Instance.UpdateCustomStats(AutoScaleDifficulty.AutoScaleDiff_Config);
             }
         }
 
@@ -159,7 +159,7 @@ namespace CustomGameStats
 
             if (PhotonNetwork.isMasterClient)
             {
-                Instance.UpdateCustomStats(CustomGameStats.AIConfig);
+                Instance.UpdateCustomStats(AutoScaleDifficulty.AIConfig);
             }
         }
 
@@ -297,7 +297,7 @@ namespace CustomGameStats
                 {
                     if (!_c.IsAI)
                     {
-                        if ((bool)config.GetValue(Settings.ToggleSwitch))
+                        if ((bool)config.GetValue(Settings.EnableAutoScaleDifficulty))
                         {
                             ApplyCustomStats(_c, config, Settings.PlayerStats, true);
                         }
@@ -314,7 +314,7 @@ namespace CustomGameStats
                 {
                     if (_c.IsAI)
                     {
-                        if ((bool)config.GetValue(Settings.ToggleSwitch))
+                        if ((bool)config.GetValue(Settings.EnableAutoScaleDifficulty))
                         {
                             ApplyCustomStats(_c, config, Settings.AIStats, true);
                         }
@@ -696,8 +696,8 @@ namespace CustomGameStats
             {
                 Character _c = __instance.GetComponent<Character>();
 
-                if ((!(bool)CustomGameStats.PlayerConfig.GetValue(Settings.ToggleSwitch) 
-                    && !(bool)CustomGameStats.AIConfig.GetValue(Settings.ToggleSwitch)) 
+                if ((!(bool)AutoScaleDifficulty.AutoScaleDiff_Config.GetValue(Settings.EnableAutoScaleDifficulty) 
+                    && !(bool)AutoScaleDifficulty.AIConfig.GetValue(Settings.EnableAutoScaleDifficulty)) 
                     || NetworkLevelLoader.Instance.IsGameplayLoading
                     || !_c.IsLateInitDone)
                 {
@@ -708,24 +708,24 @@ namespace CustomGameStats
                 {
                     if (!_c.IsAI)
                     {
-                        if ((bool)CustomGameStats.PlayerConfig.GetValue(Settings.ToggleSwitch))
+                        if ((bool)AutoScaleDifficulty.AutoScaleDiff_Config.GetValue(Settings.EnableAutoScaleDifficulty))
                         {
-                            Instance.ApplyCustomStats(_c, CustomGameStats.PlayerConfig, Settings.PlayerStats, true);
+                            Instance.ApplyCustomStats(_c, AutoScaleDifficulty.AutoScaleDiff_Config, Settings.PlayerStats, true);
                         }
                         else
                         {
-                            Instance.ApplyCustomStats(_c, CustomGameStats.PlayerConfig, Settings.PlayerStats, false);
+                            Instance.ApplyCustomStats(_c, AutoScaleDifficulty.AutoScaleDiff_Config, Settings.PlayerStats, false);
                         }
                     }
                     else
                     {
-                        if ((bool)CustomGameStats.AIConfig.GetValue(Settings.ToggleSwitch))
+                        if ((bool)AutoScaleDifficulty.AIConfig.GetValue(Settings.EnableAutoScaleDifficulty))
                         {
-                            Instance.ApplyCustomStats(_c, CustomGameStats.AIConfig, Settings.AIStats, true);
+                            Instance.ApplyCustomStats(_c, AutoScaleDifficulty.AIConfig, Settings.AIStats, true);
                         }
                         else
                         {
-                            Instance.ApplyCustomStats(_c, CustomGameStats.AIConfig, Settings.AIStats, false);
+                            Instance.ApplyCustomStats(_c, AutoScaleDifficulty.AIConfig, Settings.AIStats, false);
                         }
                     }
                 }
@@ -740,7 +740,7 @@ namespace CustomGameStats
                     {
                         if (Instance.CurrentPlayerSyncInfo != null && Instance._playerSyncInit)
                         {
-                            if ((bool)Instance.CurrentPlayerSyncInfo.GetValue(Settings.ToggleSwitch))
+                            if ((bool)Instance.CurrentPlayerSyncInfo.GetValue(Settings.EnableAutoScaleDifficulty))
                             {
                                 Instance.ApplyCustomStats(_c, Instance.CurrentPlayerSyncInfo, Settings.PlayerStats, true);
                             }
@@ -754,7 +754,7 @@ namespace CustomGameStats
                     {
                         if (Instance.CurrentAISyncInfo != null && Instance._aiSyncInit)
                         {
-                            if ((bool)Instance.CurrentAISyncInfo.GetValue(Settings.ToggleSwitch))
+                            if ((bool)Instance.CurrentAISyncInfo.GetValue(Settings.EnableAutoScaleDifficulty))
                             {
                                 Instance.ApplyCustomStats(_c, Instance.CurrentAISyncInfo, Settings.AIStats, true);
                             }

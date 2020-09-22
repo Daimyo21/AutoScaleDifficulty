@@ -4,19 +4,20 @@ using BepInEx.Logging;
 using HarmonyLib;
 using SharedModConfig;
 
-namespace CustomGameStats
+namespace AutoScaleDifficulty
 {
     [BepInPlugin(GUID, NAME, VERSION)]
     [BepInDependency(DEPENDENT, BepInDependency.DependencyFlags.HardDependency)]
-    public class CustomGameStats : BaseUnityPlugin
+    public class AutoScaleDifficulty : BaseUnityPlugin
     {
-        public const string GUID = "com.theinterstice.customgamestats";
-        public const string NAME = "Custom Game Stats";
-        public const string VERSION = "2.1.3";
+        //Credits to theinterstice for providing foundation from AutoScaleDifficulty mod
+        public const string GUID = "com.daimyo.AutoScaleDifficulty";
+        public const string NAME = "AutoScaleDifficulty";
+        public const string VERSION = "1.0.0";
         public const string DEPENDENT = SharedModConfig.SharedModConfig.GUID;
 
-        public static CustomGameStats Instance { get; private set; }
-        public static ModConfig PlayerConfig { get; private set; }
+        public static AutoScaleDifficulty Instance { get; private set; }
+        public static ModConfig AutoScaleDiff_Config { get; private set; }
         public static ModConfig AIConfig { get; private set; }
 
         internal void Awake()
@@ -33,19 +34,16 @@ namespace CustomGameStats
 
         internal void Start()
         {
-            PlayerConfig = SetupConfig(Settings.PlayerStatsTitle);
-            PlayerConfig.Register();
-
-            AIConfig = SetupConfig(Settings.AIStatsTitle);
-            AIConfig.Register();
+            AutoScaleDiff_Config = SetupConfig();
+            AutoScaleDiff_Config.Register();
 
             Logger.Log(LogLevel.Message, $"{ NAME } v{ VERSION } initialized!");
         }
 
-        private ModConfig SetupConfig(string flag)
+        private ModConfig SetupConfig()
         {
             List<BBSetting> _bbs = new List<BBSetting>();
-
+            /*
             if (flag == Settings.AIStatsTitle)
             {
                 var _settings = new Settings();
@@ -60,7 +58,7 @@ namespace CustomGameStats
                 _bbs.AddRange(_settings.PlayerSettings);
                 _bbs.AddRange(_settings.CharacterSettings);
             }
-
+            */
             ModConfig _config = new ModConfig
             {
                 ModName = Settings.ModName + flag,

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SharedModConfig;
 using UnityEngine;
 
-namespace CustomGameStats
+namespace AutoScaleDifficulty
 {
     class RPCManager : Photon.MonoBehaviour
     {
@@ -146,7 +146,7 @@ namespace CustomGameStats
                 yield return new WaitForSeconds(0.2f);
             }
 
-            SendSyncSettings(CustomGameStats.PlayerConfig, true);
+            SendSyncSettings(AutoScaleDifficulty.AutoScaleDiff_Config, true);
 
             if (!PhotonNetwork.offlineMode)
             {
@@ -161,7 +161,7 @@ namespace CustomGameStats
                 yield return new WaitForSeconds(0.2f);
             }
 
-            SendSyncSettings(CustomGameStats.AIConfig, false);
+            SendSyncSettings(AutoScaleDifficulty.AIConfig, false);
 
             if (!PhotonNetwork.offlineMode)
             {
