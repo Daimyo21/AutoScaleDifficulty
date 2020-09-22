@@ -347,17 +347,17 @@ namespace AutoScaleDifficulty
                 if (_bbs is FloatSetting _f)
                 {
                     Tag _tag = TagSourceManager.Instance.GetTag(AT.GetTagUid(_f.Name));
-                    bool _mult = (bool)config.GetValue(_f.Name + Settings.ModMult);
+                    //bool _mult = (bool)config.GetValue(_f.Name + Settings.ModMult);
 
                     if (flag)
                     {
                         SetCustomStat(character.Stats, stackSource, _tag, 
-                            _mult ? _f.m_value / 100f : _f.m_value,
-                            _mult, config);
+                            (_f.m_value / 100f),
+                            false, config);
                     }
                     else
                     {
-                        ClearCustomStat(character.Stats, _tag, stackSource, _mult);
+                        ClearCustomStat(character.Stats, _tag, stackSource, false);
                     }
                     
                 }
@@ -388,9 +388,6 @@ namespace AutoScaleDifficulty
                 case "HealthRegen":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_healthRegen"), value, Settings.Minimum, config)), mult);
                     break;
-                case "HealthBurn":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_burntHealthModifier"), value, Settings.MinimumMod, config)), mult);
-                    break;
                 case "MaxStamina":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_maxStamina"), value, CharacterStats.MIN_MAXSTAMINA_LIMIT, config)), mult);
                     break;
@@ -401,9 +398,6 @@ namespace AutoScaleDifficulty
                 case "StaminaCostReduction":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_staminaUseModifiers"), value, Settings.Minimum, config)), mult);
                     break;
-                case "StaminaBurn":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_burntStaminaModifier"), value, Settings.MinimumMod, config)), mult);
-                    break;
                 case "MaxMana":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_maxManaStat"), value, Settings.Minimum, config)), mult);
                     break;
@@ -413,89 +407,11 @@ namespace AutoScaleDifficulty
                 case "ManaUse":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_manaUseModifiers"), value, Settings.Minimum, config)), mult);
                     break;
-                case "ManaBurn":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_burntManaModifier"), value, Settings.MinimumMod, config)), mult);
-                    break;
                 case "Impact":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_impactModifier"), value, Settings.Minimum, config)), mult);
                     break;
                 case "AllDamages":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_damageModifiers"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "PhysicalDamage":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _dmg[0].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "EtherealDamage":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _dmg[1].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "DecayDamage":
-                case "DarkDamage":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _dmg[2].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "ElectricDamage":
-                case "LightDamage":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _dmg[3].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "FrostDamage":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _dmg[4].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "FireDamage":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _dmg[5].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "DamageProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_allDamageProtection"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "PhysicalProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[0].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "EtherealProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[1].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "DecayProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[2].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "ElectricProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[3].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "FrostProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[4].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "FireProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[5].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "DarkProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[6].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "LightProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _pro[7].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "AllResistances":
-                case "DamageResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_resistanceModifiers"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "PhysicalResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[0].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "EtherealResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[1].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "DecayResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[2].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "ElectricResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[3].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "FrostResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[4].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "FireResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[5].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "DarkResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[6].CurrentValue, value, Settings.Minimum, config)), mult);
-                    break;
-                case "LightResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, _res[7].CurrentValue, value, Settings.Minimum, config)), mult);
                     break;
                 case "ImpactResistance":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_impactResistance"), value, Settings.Minimum, config)), mult);
@@ -503,32 +419,8 @@ namespace AutoScaleDifficulty
                 case "StabilityRegen":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_stabilityRegen"), value, Settings.MinimumMod, config)), mult);
                     break;
-                case "EnvColdProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_coldProtection"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "EnvHeatProtection":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_heatProtection"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "ColdRegen":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_coldRegenRate"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "HeatRegen":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_heatRegenRate"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "Waterproof":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_waterproof"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "CorruptionResistance":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_corruptionResistance"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "TemperatureModifier":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_temperatureModifier"), value, Settings.Minimum, config)), mult);
-                    break;
                 case "MovementSpeed":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_movementSpeed"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "Speed":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_speedModifier"), value, Settings.MinimumMod, config)), mult);
                     break;
                 case "AttackSpeed":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_attackSpeedModifier"), value, Settings.MinimumMod, config)), mult);
@@ -542,29 +434,8 @@ namespace AutoScaleDifficulty
                 case "VisualDetectability":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_visualDetectability"), value, Settings.Minimum, config)), mult);
                     break;
-                case "PouchCapacity":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_pouchCapacity"), value, Settings.Minimum, config)), mult);
-                    break;
-                case "FoodEffectEfficiency":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_foodEffectEfficiency"), value, Settings.Minimum, config)), mult);
-                    break;
                 case "SkillCooldownModifier":
                     stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_skillCooldownModifier"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "BuyModifier":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_buyModifier"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "SellModifier":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetCharacterStat(stats, "m_sellModifier"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "FoodDepleteRate":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetPlayerStat(stats.GetComponent<PlayerCharacterStats>(), "m_foodDepletionRate"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "DrinkDepleteRate":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetPlayerStat(stats.GetComponent<PlayerCharacterStats>(), "m_drinkDepletionRate"), value, Settings.MinimumMod, config)), mult);
-                    break;
-                case "SleepDepleteRate":
-                    stats.AddStatStack(statTag, new StatStack(stackSource, Modify(mult, AT.GetPlayerStat(stats.GetComponent<PlayerCharacterStats>(), "m_sleepDepletionRate"), value, Settings.MinimumMod, config)), mult);
                     break;
             }
         }

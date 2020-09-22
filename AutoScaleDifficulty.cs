@@ -61,7 +61,7 @@ namespace AutoScaleDifficulty
             */
             ModConfig _config = new ModConfig
             {
-                ModName = Settings.ModName + flag,
+                ModName = Settings.ModName,
                 SettingsVersion = 1.0,
                 Settings = _bbs
             };
